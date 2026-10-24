@@ -1,0 +1,106 @@
+(footprint "USB_C_Receptacle_PowerOnly_6P"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -2 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "df0fba74-5071-47d6-93b9-dbcdafe5c16e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "USB_C_Receptacle_PowerOnly_6P"
+		(at 0 2 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "3b50e531-0c71-45d3-84c3-3da4c4f1a32f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3496b5c4-20bc-4910-be09-a617796e5864")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "f4d2d8d0-0e5f-4eb1-b696-68741ee4ca74")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_text user "${REFERENCE}"
+		(at 0 4 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "62a78bc9-cf75-46f1-93a6-14ac679b3ab7")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "A5" smd roundrect
+		(at -2 0)
+		(size 1.27 1.27)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.5)
+		(uuid "fe7d5b77-71d6-4d46-bf4e-b71984331337")
+	)
+	(pad "A9" smd roundrect
+		(at -4 0)
+		(size 1.27 1.27)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.5)
+		(uuid "9b841414-e70d-437c-86c8-42d11aa4fafe")
+	)
+	(pad "A12" smd roundrect
+		(at 2 0)
+		(size 1.27 1.27)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.5)
+		(uuid "71a1d719-a6e3-49f9-b83f-bfe7ff48bf18")
+	)
+	(pad "B5" smd roundrect
+		(at 0 0)
+		(size 1.27 1.27)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.5)
+		(uuid "f044d293-35ad-4db6-9d1a-dc216afa1d61")
+	)
+	(pad "SH" smd roundrect
+		(at 4 0)
+		(size 1.27 1.27)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.5)
+		(uuid "43ad614f-53ab-4575-9d06-8e6bfec3f0b7")
+	)
+	(embedded_fonts no)
+)
