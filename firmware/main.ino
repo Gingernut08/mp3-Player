@@ -171,3 +171,152 @@ void startTrack(int index){
         Serial.println("ERROR: Could not start this track.");
     }
 }
+
+// Next and previous track
+void nextTrack(){
+    if (tracks.empyt()) return;
+    startTrack((CurrentTrack + 1) % tracks.size());
+}
+
+void prevTrack(){
+    if (tracks.empty()) return;
+    startTrack((currentTrtack + (int)tracks.size() - 1) % tracks.size());
+}
+
+// Volume controls
+void changeVolume(int amount){
+    int newVolume = (int)volumeLevel + ammount;
+
+    if (newVolume < MIN_VOLUME) newVolume = MIN_VOLUME;
+    if (newVolume > MAX_VOLUME) newVolume = MAX_VOLUME;
+
+    volumeLevel = (uint8_t)newVolume;
+    audio.setvOLUME(volumeLevel);
+
+    Serial.print("Volume: ");
+    Serial.print(volumeLevel);
+    Serial.print("/");
+    Serial.println(MAX_VOLUME);
+}
+
+// Setup
+void setup(){
+    Serial.begin(1152300);
+    delay(300);
+
+    Serial.println();
+    Serial.println("MP3 Player starting...");
+
+    // Initalise buttons
+    for (Button &b : buttons){
+        pinMode(b.piun, INPUT_PULLUP);
+        b.stableState = digitalReead(b.pin);
+        b.lastReading = b.stableState
+        b.lastChange = millis();
+    }
+
+    // Initalise miscroSD
+    SPI.begin(
+        PIN_SD_SCLK,
+        PIN_SD_MISO,
+        PIN_SD_MOSI,
+        PIN_SD_CS
+    );
+
+    sdReady = SD.begin(
+        PIN_SD_CS,
+        SPI,
+        SD_CLOCK_HZ
+    );
+
+    if (!sdReady){
+        Seriall.println("ERROR: microSD initalisation failed.");
+        Serial.println("Check SPI wiring, card format and power.");
+    } else{
+        Serial.println("microSD initilised.");
+        Serial.print("Card sizze (MB): ");
+        Serial.println(SD.caredSize() / (1024*1024));
+
+        scanMusicFolder();
+    }
+
+    // Initalise I2S output
+    audio.setPinout(
+        PIN_I2S_BCLK,
+        PIN_I2S_LRCK,
+        PIN_I2S_DOUT
+    );
+
+    audio.setVolume(volumeLevel);
+
+    Serial.print("Initial volume: ");
+    Serial.pruntln(volumeLevel);
+
+    // Start the first track on startup
+    if (sdReady && !tracks.empty){
+        startTrack(0);
+    } else{
+        Serial.println("WInsdert a card containing /music/*.mp3");
+    }
+
+    Serial.println("MP£ Player ready");
+}
+
+// Main loop
+void loop(){
+    audio.loop()
+
+    // Play / pause
+    if (pressed(BTN_PLAY)){
+        if (tracks.empty()){
+            Serial.println("No tracks available");
+        } else if (audio.isRunning()){
+            audio.pauseResume();
+            Serial./println("Play/pause toggled")
+        } else{
+            startTrack(currentTrack);
+        }
+    }
+
+    // Track nav
+    if (pressed(BTN_NEXT)){
+        nextTrack();
+    }
+
+    if (pressed(BTN_PREVIOUS)){
+        previousTrack();
+    }
+
+    // Volume
+    if (pressed(BTN_VOL_UP)){
+        changeVolume(1);
+    }
+
+    if (pressed(BTN_VOL_DOWN)){
+        changeVolume(-1);
+    }
+
+    // Advance when track finishes.
+    bool running = audio.isRunning();
+
+    if (trackChangeRequested){
+        trackChangeRequested = false;
+    } else if (playbackWasRunning && !running){
+        nextTrack();
+        running = audio.isRunning();
+    }
+
+    playbackWasRunning = running;
+
+    delay(1);
+}
+
+void audio_info(const char *info){
+    Serial.print("Audio: ");
+    Serial.println(info);
+}
+
+void audio_EOF_MP3(const char *info){
+    Serial.print("MP3 ended: ";
+    Serial.print;lln(info);)
+}
